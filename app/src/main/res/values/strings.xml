@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KidPod</string>
+
+    <!-- Setup -->
+    <string name="setup_welcome_title">Welcome to KidPod!</string>
+    <string name="setup_welcome_desc">Turn this phone into a safe music player for your child. No distractions — just music and audiobooks.</string>
+    <string name="setup_admin_title">Activate Device Admin</string>
+    <string name="setup_admin_desc">KidPod needs Device Admin permission to lock this phone so your child stays focused.</string>
+    <string name="setup_admin_button">Activate Now</string>
+    <string name="setup_admin_active">Device Admin is active</string>
+    <string name="setup_pin_title">Create Parent PIN</string>
+    <string name="setup_pin_desc">This PIN unlocks parent settings. Choose 4–6 digits your child won\'t guess.</string>
+    <string name="setup_pin_confirm_title">Confirm Your PIN</string>
+    <string name="setup_complete_title">All Set!</string>
+    <string name="setup_complete_desc">KidPod is ready. Connect via USB to add music and audiobooks.</string>
+    <string name="setup_start_button">Start KidPod</string>
+    <string name="setup_next_button">Next</string>
+
+    <!-- Kid Mode -->
+    <string name="kid_mode_music">Music</string>
+    <string name="kid_mode_audiobooks">Audiobooks</string>
+    <string name="kid_mode_playlists">Playlists</string>
+    <string name="kid_mode_no_music">No music yet!\nAsk a parent to add some.</string>
+    <string name="kid_mode_no_audiobooks">No audiobooks yet!\nAsk a parent to add some.</string>
+
+    <!-- Player -->
+    <string name="player_play">Play</string>
+    <string name="player_pause">Pause</string>
+    <string name="player_next">Next</string>
+    <string name="player_previous">Previous</string>
+    <string name="player_shuffle">Shuffle</string>
+    <string name="player_repeat">Repeat</string>
+
+    <!-- Parent Mode -->
+    <string name="parent_mode_title">Parent Settings</string>
+    <string name="parent_enter_pin">Enter PIN</string>
+    <string name="parent_pin_hint">Enter your 4–6 digit PIN</string>
+    <string name="parent_pin_wrong">Wrong PIN. Try again.</string>
+    <string name="parent_pin_locked">Too many attempts. Try again in 1 minute.</string>
+    <string name="parent_exit_button">Exit Parent Mode</string>
+    <string name="parent_change_pin">Change PIN</string>
+    <string name="parent_operating_mode">Operating Mode</string>
+    <string name="parent_mode_offline">Fully Offline (Recommended)</string>
+    <string name="parent_mode_whitelist">Whitelisted Apps Allowed</string>
+    <string name="parent_volume_limit">Maximum Volume</string>
+    <string name="parent_rescan_content">Rescan Content</string>
+    <string name="parent_device_admin_status">Device Admin Status</string>
+    <string name="parent_lock_task_status">Kiosk Mode Status</string>
+    <string name="parent_exit_kiosk">Exit Kiosk Mode Temporarily</string>
+    <string name="parent_reset_settings">Factory Reset KidPod Settings</string>
+    <string name="parent_reset_confirm">This will clear all KidPod settings including your PIN. Are you sure?</string>
+    <string name="parent_reset_yes">Reset</string>
+    <string name="parent_cancel">Cancel</string>
+
+    <!-- Status -->
+    <string name="status_active">Active</string>
+    <string name="status_inactive">Inactive</string>
+    <string name="status_scanning">Scanning for content…</string>
+    <string name="status_scan_complete">Scan complete: %1$d songs, %2$d audiobooks found</string>
+
+    <!-- Errors -->
+    <string name="error_permission_denied">Storage permission needed to find music files.</string>
+    <string name="error_no_files">No audio files found in /KidPod/Music/ or /KidPod/Audiobooks/</string>
+    <string name="error_playback">Could not play this file. It may be corrupted.</string>
+
+    <!-- Accessibility -->
+    <string name="cd_logo">KidPod logo</string>
+    <string name="cd_play_pause">Play or pause</string>
+    <string name="cd_skip_next">Skip to next</string>
+    <string name="cd_skip_previous">Go to previous</string>
+    <string name="cd_album_art">Album artwork</string>
+</resources>

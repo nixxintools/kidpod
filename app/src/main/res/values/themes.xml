@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme — Compose handles most theming; this covers window/status bar -->
+    <style name="Theme.KidPod" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/background_light</item>
+        <item name="android:statusBarColor">@color/coral</item>
+        <item name="android:navigationBarColor">@color/background_light</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

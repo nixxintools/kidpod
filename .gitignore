@@ -1,0 +1,25 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android APKs and build outputs
+app/build/
+
+# Release keystore (NEVER commit this)
+*.keystore
+*.jks
+
+# Google services (contains API keys)
+google-services.json
+
+# Website build artifacts
+website/.next/
+website/node_modules/
+website/out/
