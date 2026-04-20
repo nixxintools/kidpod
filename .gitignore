@@ -23,3 +23,5 @@ google-services.json
 website/.next/
 website/node_modules/
 website/out/
+
+.vercel

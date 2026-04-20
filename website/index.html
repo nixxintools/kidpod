@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KidPod — Safe Music Player for Kids</title>
+  <meta name="description" content="Transform old Android phones into locked-down, distraction-free music and audiobook players for children. No social media. No games. Just music." />
+  <meta property="og:title" content="KidPod — Safe Music Player for Kids" />
+  <meta property="og:description" content="Turn an old Android phone into a safe, distraction-free iPod for your child." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:   #FF6B6B;
+      --coral-d: #E05555;
+      --teal:    #4ECDC4;
+      --yellow:  #FFE66D;
+      --purple:  #A78BFA;
+      --sky:     #60A5FA;
+      --bg:      #FFF9F0;
+      --dark:    #1A1A2E;
+      --text:    #2D2D2D;
+      --muted:   #6B7280;
+      --white:   #FFFFFF;
+      --radius:  16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,249,240,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo .logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--coral); display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo .logo-icon svg { width: 22px; height: 22px; fill: white; }
+    .nav-logo span { font-size: 1.3rem; font-weight: 900; color: var(--coral); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 700; font-size: 0.95rem; }
+    .nav-links a:hover { color: var(--coral); }
+    .nav-cta {
+      background: var(--coral); color: white; border: none; border-radius: 12px;
+      padding: 10px 20px; font-family: inherit; font-weight: 800; font-size: 0.9rem;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--coral-d); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 80px 24px 60px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 48px 24px 40px; }
+      .hero-visual { order: -1; }
+      .nav-links { display: none; }
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--coral); background: linear-gradient(135deg,#FF6B6B,#FF9494);
+      color: white; border-radius: 100px; padding: 6px 16px;
+      font-size: 0.82rem; font-weight: 800; margin-bottom: 20px; letter-spacing: 0.5px;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900; line-height: 1.15; color: var(--dark);
+      margin-bottom: 20px;
+    }
+    h1 span { color: var(--coral); }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted); margin-bottom: 36px; font-weight: 600;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    @media (max-width: 768px) { .hero-actions { justify-content: center; } }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--coral); color: white; border: none; border-radius: var(--radius);
+      padding: 16px 28px; font-family: inherit; font-weight: 800; font-size: 1rem;
+      cursor: pointer; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(255,107,107,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,107,0.45); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; color: var(--dark); border: 2px solid rgba(0,0,0,0.1);
+      border-radius: var(--radius); padding: 14px 26px;
+      font-family: inherit; font-weight: 800; font-size: 1rem;
+      cursor: pointer; text-decoration: none; transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--coral); color: var(--coral); }
+
+    /* ── Phone mockup ── */
+    .hero-visual { display: flex; justify-content: center; }
+    .phone-wrap {
+      position: relative; width: 260px;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.18));
+    }
+    .phone-outer {
+      background: var(--dark); border-radius: 40px; padding: 12px;
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+    .phone-screen {
+      background: var(--bg); border-radius: 30px; overflow: hidden;
+      aspect-ratio: 9/19; display: flex; flex-direction: column;
+    }
+    .phone-status {
+      background: var(--coral); height: 32px; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .phone-status span { color: white; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; }
+    .phone-body { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; align-items: center; }
+    .phone-logo {
+      width: 56px; height: 56px; border-radius: 18px; background: var(--coral);
+      display: flex; align-items: center; justify-content: center; margin: 8px 0 4px;
+    }
+    .phone-logo svg { width: 32px; height: 32px; fill: white; }
+    .phone-brand { font-size: 0.85rem; font-weight: 900; color: var(--coral); margin-bottom: 16px; }
+    .phone-card {
+      width: 100%; border-radius: 14px; padding: 10px 12px;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    }
+    .phone-card-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .phone-card-icon svg { width: 20px; height: 20px; fill: white; }
+    .phone-card-label { font-size: 0.75rem; font-weight: 800; color: var(--dark); }
+
+    /* ── Stats ── */
+    .stats { background: var(--dark); padding: 40px 24px; }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center;
+    }
+    @media (max-width: 600px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+    .stat-val { font-size: 2rem; font-weight: 900; color: var(--coral); }
+    .stat-lbl { font-size: 0.85rem; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 4px; }
+
+    /* ── Sections ── */
+    section { padding: 80px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; background: var(--coral); background: linear-gradient(135deg,#FF6B6B22,#FF6B6B11);
+      color: var(--coral); border-radius: 100px; padding: 4px 14px;
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; color: var(--dark); margin-bottom: 12px; }
+    .section-sub { font-size: 1.05rem; color: var(--muted); font-weight: 600; max-width: 540px; margin-bottom: 48px; }
+
+    /* ── Feature grid ── */
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    @media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .feature-grid { grid-template-columns: 1fr; } }
+    .feature-card {
+      background: white; border-radius: 20px; padding: 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.10); }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+    }
+    .feature-icon svg { width: 28px; height: 28px; fill: white; }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; color: var(--dark); }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+
+    /* ── How it works ── */
+    .how-bg { background: white; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; }
+    @media (max-width: 800px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--coral); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 900; margin-bottom: 16px;
+    }
+    .step h3 { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+    .step p { font-size: 0.88rem; color: var(--muted); font-weight: 600; }
+
+    /* ── Parent / Kid split ── */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    @media (max-width: 700px) { .split { grid-template-columns: 1fr; } }
+    .split-card {
+      border-radius: 24px; padding: 36px; color: white;
+    }
+    .split-card.parent { background: linear-gradient(135deg, var(--dark), #16213E); }
+    .split-card.kid    { background: linear-gradient(135deg, var(--coral), #FF9494); }
+    .split-card h3 { font-size: 1.4rem; font-weight: 900; margin-bottom: 16px; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.95rem; font-weight: 600;
+    }
+    .feature-list li::before { content: "✓"; font-weight: 900; flex-shrink: 0; }
+
+    /* ── Requirements ── */
+    .req-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 700px) { .req-grid { grid-template-columns: 1fr; } }
+    .req-card {
+      background: white; border-radius: 16px; padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center;
+    }
+    .req-card .req-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .req-card h4 { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+    .req-card p { font-size: 0.88rem; color: var(--muted); font-weight: 600; }
+
+    /* ── CTA ── */
+    .cta-section { background: linear-gradient(135deg, var(--coral) 0%, #FF9494 100%); text-align: center; }
+    .cta-section h2 { color: white; }
+    .cta-section p { color: rgba(255,255,255,0.85); font-size: 1.1rem; font-weight: 600; margin-bottom: 36px; }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; color: var(--coral); border: none; border-radius: var(--radius);
+      padding: 16px 32px; font-family: inherit; font-weight: 800; font-size: 1.05rem;
+      cursor: pointer; text-decoration: none; transition: transform 0.15s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,0.5);
+      text-align: center; padding: 32px 24px; font-size: 0.85rem; font-weight: 600;
+    }
+    footer a { color: var(--coral); text-decoration: none; }
+
+    /* ── Pill badge ── */
+    .badge {
+      display: inline-block; background: rgba(255,255,255,0.15);
+      border-radius: 100px; padding: 3px 12px; font-size: 0.78rem; font-weight: 700;
+      margin-left: 8px; vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+    </div>
+    <span>KidPod</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#parents">Parents</a></li>
+    <li><a href="#download">Download</a></li>
+  </ul>
+  <a class="nav-cta" href="#download">Get KidPod</a>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      100% Safe · No Internet Required
+    </div>
+    <h1>The safe <span>music player</span> your kids will love</h1>
+    <p class="hero-sub">Turn an old Android phone into a locked-down, distraction-free iPod. No social media, no games, no browser — just music and audiobooks.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#download">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M5 20h14v-2H5v2zm7-18l-7 7h4v6h6V9h4l-7-7z"/></svg>
+        Download Free
+      </a>
+      <a class="btn-secondary" href="#how">See How It Works</a>
+    </div>
+  </div>
+
+  <!-- Phone Mockup -->
+  <div class="hero-visual">
+    <div class="phone-wrap">
+      <div class="phone-outer">
+        <div class="phone-screen">
+          <div class="phone-status"><span>KIDPOD ♪</span></div>
+          <div class="phone-body">
+            <div class="phone-logo">
+              <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+            </div>
+            <div class="phone-brand">KidPod</div>
+            <div class="phone-card" style="background:#FF6B6B22;">
+              <div class="phone-card-icon" style="background:#FF6B6B;">
+                <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+              </div>
+              <div class="phone-card-label">Music</div>
+            </div>
+            <div class="phone-card" style="background:#4ECDC422;">
+              <div class="phone-card-icon" style="background:#4ECDC4;">
+                <svg viewBox="0 0 24 24"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h1v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-2v8h1c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
+              </div>
+              <div class="phone-card-label">Audiobooks</div>
+            </div>
+            <div class="phone-card" style="background:#A78BFA22;">
+              <div class="phone-card-icon" style="background:#A78BFA;">
+                <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18A2.99 2.99 0 0 0 16 14c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+              </div>
+              <div class="phone-card-label">Playlists</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Stats ── -->
+<div class="stats">
+  <div class="stats-inner">
+    <div><div class="stat-val">0</div><div class="stat-lbl">Distractions</div></div>
+    <div><div class="stat-val">100%</div><div class="stat-lbl">Offline capable</div></div>
+    <div><div class="stat-val">Free</div><div class="stat-lbl">Forever</div></div>
+    <div><div class="stat-val">Android 8+</div><div class="stat-lbl">No rooting needed</div></div>
+  </div>
+</div>
+
+<!-- ── Features ── -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-tag">Features</div>
+    <h2>Everything a child needs, nothing they don't</h2>
+    <p class="section-sub">KidPod locks down any Android phone so kids can enjoy music and audiobooks without getting distracted.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FF6B6B;">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        </div>
+        <h3>Kiosk Lockdown</h3>
+        <p>Kids can't leave the app. Home button, recent apps, and status bar are all disabled in kid mode.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#4ECDC4;">
+          <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+        </div>
+        <h3>Music Playback</h3>
+        <p>Plays MP3, FLAC, M4A, and OGG. Browse by artist, album, or all songs. Shuffle and repeat modes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#A78BFA;">
+          <svg viewBox="0 0 24 24"><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h1v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-2v8h1c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/></svg>
+        </div>
+        <h3>Audiobooks</h3>
+        <p>Supports M4B and MP3 audiobooks. Auto-saves position every 30 seconds. Resume exactly where they left off.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#60A5FA;">
+          <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg>
+        </div>
+        <h3>Parent PIN</h3>
+        <p>4–6 digit PIN lets parents access settings. Encrypted with AES-256 and SHA-256 hashing. 5-attempt lockout.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FFE66D; filter:hue-rotate(0deg);">
+          <svg viewBox="0 0 24 24" style="fill:#1A1A2E;"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
+        </div>
+        <h3>USB Content Transfer</h3>
+        <p>Drag-and-drop files from any computer. Connect via USB, add files to /KidPod/Music/, done.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#FF6B6B;">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </div>
+        <h3>Volume Limit</h3>
+        <p>Set a maximum volume to protect young ears. Kids physically cannot turn it up beyond the limit you set.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ── -->
+<section id="how" class="how-bg">
+  <div class="section-inner">
+    <div class="section-tag">How It Works</div>
+    <h2>Up and running in 15 minutes</h2>
+    <p class="section-sub">No technical knowledge needed. Just an old Android phone and a few minutes of setup.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Install KidPod</h3>
+        <p>Download the APK and install it on any Android 8.0+ phone. No Play Store required.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Activate & Set PIN</h3>
+        <p>Grant Device Admin permission, set your parent PIN. KidPod becomes the default home screen.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Add Content via USB</h3>
+        <p>Connect the phone to your computer, drag MP3/M4B files into /KidPod/Music/ and /KidPod/Audiobooks/.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Hand to your child!</h3>
+        <p>KidPod scans the folders and shows all content. The phone is now a locked-down music player.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Parent & Kid view ── -->
+<section id="parents">
+  <div class="section-inner">
+    <div class="section-tag">For Everyone</div>
+    <h2>Designed for both parents and kids</h2>
+    <p class="section-sub">Simple enough for young children, powerful enough to give parents full control.</p>
+
+    <div class="split">
+      <div class="split-card parent">
+        <h3>🔒 Parent Controls</h3>
+        <ul class="feature-list">
+          <li>4–6 digit PIN — encrypted & hashed</li>
+          <li>Set maximum volume level</li>
+          <li>Choose Offline or Whitelist mode</li>
+          <li>Allow specific apps (Spotify Kids, Audible…)</li>
+          <li>View listening history</li>
+          <li>Rescan content after USB transfer</li>
+          <li>Factory reset KidPod settings</li>
+          <li>Exit kiosk mode temporarily</li>
+        </ul>
+      </div>
+      <div class="split-card kid">
+        <h3>🎵 Kid Experience</h3>
+        <ul class="feature-list">
+          <li>Giant, easy-to-tap buttons (60dp+)</li>
+          <li>Bright, cheerful colors</li>
+          <li>Browse music by artist & album</li>
+          <li>Audiobooks with auto-bookmark</li>
+          <li>Playlists</li>
+          <li>Playback speed control (0.75×–2×)</li>
+          <li>Sleep timer (15/30/45/60 min)</li>
+          <li>No pop-ups, no notifications, no distractions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Requirements ── -->
+<section class="how-bg">
+  <div class="section-inner">
+    <div class="section-tag">Requirements</div>
+    <h2>What you need</h2>
+    <p class="section-sub">KidPod works with hardware you probably already have.</p>
+
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-icon">📱</div>
+        <h4>Any Android Phone</h4>
+        <p>Android 8.0 (Oreo) or higher. Any brand — Samsung, Google, Xiaomi, OnePlus.</p>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">💻</div>
+        <h4>A Computer</h4>
+        <p>Windows, Mac, or Linux. Used once to install the APK and transfer music via USB.</p>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🎵</div>
+        <h4>Your Music Files</h4>
+        <p>MP3, FLAC, M4A, OGG, M4B. No streaming accounts needed — fully offline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Download CTA ── -->
+<section id="download" class="cta-section">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-tag" style="background:rgba(255,255,255,0.25); color:white;">Free & Open Source</div>
+    <h2>Give your child the gift of music — without the distractions</h2>
+    <p>Download KidPod free. No account. No subscription. No ads. Ever.</p>
+    <a class="btn-white" href="https://github.com/nixxintools/kidpod/releases">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zm7-18l-7 7h4v6h6V9h4l-7-7z"/></svg>
+      Download APK from GitHub
+    </a>
+    <p style="margin-top:24px; color:rgba(255,255,255,0.7); font-size:0.9rem;">
+      Open source on
+      <a href="https://github.com/nixxintools/kidpod" style="color:white; font-weight:800;">GitHub</a>
+      · Android 8.0+ · Free forever
+    </p>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>© 2026 KidPod. Free and open source.
+    Built with ❤️ for parents everywhere. ·
+    <a href="https://github.com/nixxintools/kidpod">GitHub</a>
+  </p>
+</footer>
+
+</body>
+</html>

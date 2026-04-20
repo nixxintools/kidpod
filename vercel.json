@@ -1,0 +1,7 @@
+{
+  "name": "kidpodapp",
+  "outputDirectory": "website",
+  "buildCommand": null,
+  "installCommand": null,
+  "framework": null
+}
